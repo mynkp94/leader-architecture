@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="vi"><head>
+<meta charset="utf-8">
+<title>KTS Trưởng</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="KTS Trưởng">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#12161d">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+html,body{margin:0;height:100%;background:#12161d;color:#e9edf3;font-family:-apple-system,"SF Pro Text",system-ui,sans-serif;overflow:hidden;touch-action:none}
+#app{height:100%;display:flex;flex-direction:column;align-items:center;padding:max(env(safe-area-inset-top),10px) 14px max(env(safe-area-inset-bottom),14px)}
+#top{width:100%;max-width:420px;display:flex;gap:12px;margin-top:6px}
+.m{flex:1;text-align:center}
+.dot{height:12px;display:flex;align-items:center;justify-content:center}
+.dot i{display:block;border-radius:50%;background:#e9edf3;width:0;height:0;transition:all .15s}
+.ic{font-size:26px;line-height:1.15}
+.nm{font-size:10px;opacity:.6;margin:1px 0 4px}
+.bar{height:6px;border-radius:3px;background:#2a313d;overflow:hidden}
+.fill{height:100%;width:50%;background:#5ab0ff;transition:width .45s ease,background .3s}
+.fill.warn{background:#ff6b5e}
+#info{margin-top:10px;font-size:12px;opacity:.55;letter-spacing:.3px}
+#stage{flex:1;width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:0}
+#choice{min-height:46px;display:flex;align-items:flex-end;justify-content:center;font-size:17px;font-weight:600;text-align:center;opacity:0;padding:0 10px;color:#ffd98a}
+#card{width:min(86vw,340px);height:min(52vh,410px);border-radius:22px;padding:18px 20px;display:flex;flex-direction:column;align-items:center;color:#1d2330;touch-action:none;cursor:grab;will-change:transform,opacity;
+background-color:#f4efe3;background-image:linear-gradient(rgba(60,90,140,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(60,90,140,.09) 1px,transparent 1px);background-size:22px 22px;
+box-shadow:0 18px 40px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.5)}
+#cic{font-size:62px;line-height:1.1;margin-top:6px}
+#cname{font-size:13px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#3b5b8c;margin:6px 0 14px;text-align:center}
+#ctext{font-size:19px;line-height:1.4;text-align:center;font-weight:500;display:flex;align-items:center;flex:1}
+#btns{display:flex;gap:16px;margin-top:6px}
+#btns button{width:64px;height:44px;border-radius:22px;border:0;background:#222a37;color:#e9edf3;font-size:20px}
+#btns button:active{background:#33405a}
+#over{position:fixed;inset:0;background:rgba(10,12,16,.94);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center}
+#over h2{font-size:26px;margin:0 0 12px;color:#ffd98a}
+#over p{font-size:16px;line-height:1.5;margin:0 0 16px;max-width:340px;opacity:.9}
+#over small{opacity:.6;display:block;margin-bottom:22px}
+#over button{padding:13px 30px;border:0;border-radius:24px;background:#5ab0ff;color:#08121f;font-size:17px;font-weight:700}
+</style></head><body>
+<div id="app">
+  <div id="top"></div>
+  <div id="info"></div>
+  <div id="stage">
+    <div id="choice"></div>
+    <div id="card"><div id="cic"></div><div id="cname"></div><div id="ctext"></div></div>
+  </div>
+  <div id="btns"><button id="bl">←</button><button id="br">→</button></div>
+</div>
+<div id="over"><h2 id="oh"></h2><p id="op"></p><small id="os"></small><button id="ob">Chơi lại</button></div>
+<script>
+(function(){
+var SAVED = (function(){try{var s=JSON.parse(localStorage.getItem('kts-truong-save'));if(s&&typeof s==='object')return s;}catch(e){}return {best:0,state:null};})();
+var M=[['🤝','Chủ đầu tư'],['👥','Đội ngũ'],['💰','Tài chính'],['⭐','Uy tín']];
+var END=[
+ [['Chủ đầu tư quay lưng','Hợp đồng bị hủy, khách hàng cuối cùng cũng đi tìm một văn phòng khác. Danh sách dự án trống dần.'],
+  ['Chủ đầu tư nắm quyền','Anh ta bắt đầu chỉ đạo từng đường nét. Bạn không còn là kiến trúc sư, chỉ là người vẽ theo ý khách.']],
+ [['Cả đội nghỉ việc','Sáng thứ Hai văn phòng trống trơn, chỉ còn tiếng máy lạnh và một tờ giấy ghi “Tụi em đi nhé”.'],
+  ['Đội ngũ ra riêng','Team giỏi tới mức không còn cần bạn. Cả nhóm mở studio mới và giành luôn khách của bạn.']],
+ [['Phá sản','Quỹ cạn, lương không trả nổi, văn phòng bị thu hồi. Bạn quay lại làm thuê cho người khác.'],
+  ['Bị thâu tóm','Tiền nhiều tới mức một tập đoàn bất động sản mua lại công ty. Bạn thành nhân viên của chính văn phòng mình.']],
+ [['Tai tiếng','Tên công ty gắn với những công trình trục trặc. Không ai gọi điện hỏi thiết kế nữa.'],
+  ['Quá nổi tiếng','Bạn được mời lên TV, viết sách, đi diễn thuyết. Cuối cùng chẳng còn thời gian cầm bút vẽ.']]
+];
+function c(id,who,ic,t,L,R){return {id:id,who:who,ic:ic,t:t,L:L,R:R};}
+function fx(id,m,s,who,ic,t,L,R){var o=c(id,who,ic,t,L,R);o.m=m;o.s=s;return o;}
+
+var INTRO=c('intro','Chào mừng','📐','Bạn vừa nhận chức Kiến trúc sư trưởng. Vuốt thẻ sang trái hoặc phải để quyết định. Đừng để chỉ số nào về 0 hoặc đầy 100.',
+ ['Bắt đầu',[0,0,0,0]],['Bắt đầu',[0,0,0,0]]);
+
+var MAIN=[
+c('giengtroi','Bà Hạnh (chủ nhà)','🏠','Anh KTS ơi, em muốn đặt giếng trời giữa nhà, thầy phong thủy bảo phải đúng chỗ mới giữ được tài lộc.',['Giải thích kỹ thuật',[-8,0,0,6]],['Chiều ý chủ nhà',[12,0,-4,-6]]),
+c('revit','Hùng (trưởng nhóm)','💻','Revit treo cứng, ba tiếng chưa lưu. Cả team đang nhìn anh.',['Dùng bản backup cũ',[0,-6,0,0]],['Làm lại tối nay',[0,-14,0,6]]),
+c('matdung','Anh Tuấn (chủ đầu tư)','👔','Phương án đẹp, nhưng anh muốn đổi toàn bộ mặt đứng. Mai anh duyệt nhé.',['Nhận, team tăng ca',[12,-14,0,4]],['Xin thêm một tuần',[-10,4,0,0]]),
+c('grasshopper','Lan (nhân viên mới)','👩‍💻','Anh ơi, em tự học Grasshopper tuần qua, cho em thử dựng mặt đứng nhé?',['Cho Lan thử',[0,10,-4,8]],['Làm cách cũ cho chắc',[0,-8,4,-2]]),
+c('tienluong','Chị Mai (kế toán)','🧾','Đợt 2 của dự án biệt thự chưa về mà lương team sắp đến hạn.',['Nhắc chủ đầu tư',[-10,0,14,0]],['Ứng tiền túi',[0,8,-14,0]]),
+c('maytram','Hùng (trưởng nhóm)','🖥️','Máy cũ render một ảnh mất năm tiếng. Team xin hai máy trạm mới.',['Nhịn thêm quý nữa',[0,-10,8,0]],['Mua luôn',[0,12,-16,3]]),
+c('pccc','Phòng PCCC','🚒','Hồ sơ bị trả lại: thiếu lối thoát hiểm thứ hai.',['Sửa nghiêm túc',[-6,-6,-6,10]],['Nhờ người quen lo',[4,0,-8,-14]]),
+c('vatlieu','Thầu Bảy (nhà thầu)','🧱','Thầu xin đổi vật liệu ốp sang loại rẻ hơn. Nhìn gần giống y chang.',['Giữ đúng đặc tả',[-8,0,0,10]],['Đồng ý',[6,0,8,-14]]),
+c('giaithuong','Hội Kiến trúc','🏆','Giải kiến trúc năm nay mời tham dự. Phí hồ sơ 20 triệu.',['Bỏ qua',[0,0,4,-3]],['Tham dự',[0,6,-12,14]]),
+c('ungvien','Ứng viên','🙋','Em xin ứng tuyển. Em đòi lương hơi cao so với kinh nghiệm, nhưng portfolio rất đẹp.',['Từ chối',[0,-3,4,0]],['Nhận',[0,10,-12,4]]),
+c('phi','Anh Tuấn (chủ đầu tư)','💬','Phí thiết kế 4% hơi cao, anh trả 3% được không?',['Giữ 4%',[-12,0,10,3]],['Đồng ý 3%',[10,0,-12,-3]]),
+c('phongthuy','Thầy phong thủy','🧭','Cửa chính phải lệch 12 độ mới hợp tuổi gia chủ.',['Lệch 12 độ',[10,0,0,-6]],['Giữ nguyên',[-10,0,0,4]]),
+c('banquyen','Chị Mai (kế toán)','🧾','Tuần sau có đoàn kiểm tra bản quyền phần mềm. Còn ba máy dùng bản không rõ nguồn.',['Mua bản quyền',[0,0,-18,10]],['Giấu tạm',[0,0,6,-4],{next:['kiemtra',3]}]),
+c('bqlchungcu','Ban quản lý chung cư','🏢','Ban quản lý yêu cầu nộp lại hồ sơ cải tạo lần thứ ba vì thiếu một chữ ký.',['Đi nộp lại',[4,-6,-3,3]],['Nhờ khách tự làm',[-8,3,0,0]]),
+c('namcuoi','Hùng (trưởng nhóm)','💍','Anh ơi, em xin nghỉ mười ngày để cưới, đúng tuần nộp hồ sơ.',['Chúc mừng, duyệt',[-6,14,0,0]],['Dời lại sau hồ sơ',[4,-14,0,0]]),
+c('thuctap','Sinh viên thực tập','🎓','Năm bạn sinh viên xin thực tập miễn phí ở công ty.',['Nhận cả nhóm',[0,-4,6,6]],['Không nhận',[0,3,-3,-4]]),
+c('baochi','Tạp chí Nhà Đẹp','📰','Tạp chí muốn phỏng vấn về căn nhà phố ba mét ngang.',['Từ chối, bận',[0,0,3,-8]],['Nhận lời',[3,-4,0,14]]),
+c('dem23h','Anh Tuấn (chủ đầu tư)','🌙','Gần nửa đêm: đổi chiều cao tầng 1 từ 4 mét xuống 3,6 mét, mai gửi lại bản vẽ nhé.',['Mai tính',[-8,4,0,0]],['Làm ngay',[8,-10,0,2]]),
+c('khachsan','Tập đoàn Phú Long','🏨','Dự án khách sạn 20 tầng, hạn gấp, lợi nhuận mỏng. Cần tuyển thêm năm người.',['Nhận dự án',[6,-12,14,8]],['Từ chối',[-4,8,-4,0]]),
+c('teambuilding','Cả team','🍻','Cả team xin đi Đà Lạt ba ngày team building.',['Hoãn lại',[0,-12,8,0]],['Đi chứ',[0,14,-12,2]]),
+c('saochep','Fanpage lạ','👀','Một công ty khác đăng concept giống hệt phương án của mình.',['Im lặng',[0,0,0,-6]],['Lên tiếng công khai',[-3,4,0,8]]),
+c('maylanh','Văn phòng','🥵','Máy lạnh hỏng giữa mùa nóng.',['Mua quạt mini',[0,-10,6,0]],['Gọi thợ sửa',[0,8,-8,0]]),
+c('vayvon','Ngân hàng','🏦','Ngân hàng mời vay vốn lưu động, lãi 9% một năm.',['Vay',[0,0,16,-3],{next:['tralai',4]}],['Không vay',[0,0,-4,2]]),
+c('cayxanh','Hùng (trưởng nhóm)','🌿','Em muốn phủ cây xanh lên toàn mặt đứng, chi phí tăng 12%.',['Quá tốn, bỏ',[6,-6,4,0]],['Đề xuất với chủ',[-6,8,0,10]]),
+c('hoptac','Studio Nam Á','🤝','Studio bên kia muốn cùng đấu thầu, chia 6–4 nghiêng về họ.',['Từ chối',[0,0,0,3]],['Hợp tác',[0,3,10,-6]]),
+c('bepnho','Bà Hạnh (chủ nhà)','🍳','Em thấy bếp nhỏ quá, dù đúng như bản vẽ đã duyệt.',['Dẫn bản vẽ đã duyệt',[-10,0,0,4]],['Vẽ lại miễn phí',[12,-8,-6,0]]),
+c('facebook','Lan (nhân viên)','📱','Em đăng ảnh dự án chưa hoàn thiện lên Facebook, nhiều người khen lắm.',['Nhắc gỡ xuống',[0,-6,0,4]],['Cho qua, đang hot',[-4,8,0,8]]),
+c('tangluong','Hùng (trưởng nhóm)','💰','Anh ơi, em xin tăng lương 15%.',['Đồng ý',[0,14,-12,0]],['Chưa được',[0,-14,10,0]]),
+c('hangxom','Ông hàng xóm','🧓','Hồ sơ cần chữ ký ông hàng xóm bên trái, mà ông đang giận chủ nhà.',['Nhờ chủ nhà gặp ông',[-4,0,0,4]],['Tự đi thuyết phục',[8,-6,0,-3]]),
+c('hopquocte','Chủ đầu tư Singapore','🌏','Buổi họp tiếng Anh, trong team chỉ Lan nói được.',['Để Lan dẫn họp',[6,-6,0,4]],['Thuê phiên dịch',[8,0,-10,2]]),
+c('thep','Anh Tuấn (chủ đầu tư)','🏗️','Thép tăng 20%. Anh muốn em giảm tiết diện kết cấu cho rẻ.',['Giữ an toàn kết cấu',[-8,0,0,10]],['Giảm tiết diện',[10,0,6,-6],{next:['vetnut',5]}]),
+c('hoahong','Hãng nội thất','🛋️','Hãng nội thất chi hoa hồng 8% nếu chỉ định thương hiệu của họ.',['Nhận hoa hồng',[0,0,14,-4],{next:['lohh',5]}],['Từ chối',[0,0,-2,8]]),
+c('gioque','Mẹ','👵','Cuối tuần có giỗ ở quê, trùng ngày nộp hồ sơ.',['Về quê',[-5,6,0,-4]],['Ở lại làm',[5,-6,0,2]]),
+c('nhavanhoa','Hội cộng đồng','🏘️','Xã mời thiết kế nhà văn hóa miễn phí cho bà con.',['Từ chối',[0,0,4,-6]],['Nhận làm',[0,-6,-10,16]]),
+c('ransomware','Bộ phận IT','🔒','Server bị mã hóa. Hacker đòi tiền chuộc.',['Trả tiền chuộc',[0,0,-18,-8]],['Khôi phục từ backup',[-6,-8,-6,0]]),
+c('vanphong','Môi giới','🏙️','Có mặt bằng đẹp ở trung tâm, thuê dài hạn, giá hợp lý.',['Chuyển văn phòng',[0,8,-14,10]],['Ở lại chỗ cũ',[0,-4,4,-4]]),
+c('dungduan','Anh Tuấn (chủ đầu tư)','😬','Dự án tạm dừng vì chủ đầu tư thiếu vốn. Anh xin giãn tiến độ thanh toán.',['Giãn hai tháng',[10,0,-10,0]],['Giữ tiến độ',[-12,0,10,0]]),
+c('lannghi','Lan (nhân viên)','😔','Em thấy kiệt sức quá, em muốn nghỉ việc.',['Giữ lại, tăng lương',[0,10,-8,0]],['Chúc em may mắn',[0,-14,4,-2]]),
+c('golf','Anh Tuấn (chủ đầu tư)','⛳','Cuối tuần đi golf với anh nhé, có vài đối tác.',['Từ chối, ở nhà',[-6,4,0,0]],['Đi golf',[8,-4,-4,6]]),
+c('chupanh','Thợ ảnh','📸','Thợ ảnh xin chụp công trình, 15 triệu, ảnh đẹp dùng làm portfolio.',['Tự chụp bằng điện thoại',[0,0,4,-6]],['Thuê chụp',[0,0,-10,12]]),
+c('tongthau','Tổng thầu','📞','Tổng thầu hỏi bản vẽ thi công đợt một có giao sớm hai tuần được không.',['Cam kết giao sớm',[8,-12,4,4]],['Giữ lịch ban đầu',[-8,4,0,0]]),
+c('giahan','Công ty phần mềm','☁️','Gói phần mềm thiết kế sắp hết hạn, giảm giá nếu gia hạn ba năm.',['Gia hạn một năm',[0,0,-6,0]],['Gia hạn ba năm',[0,2,-14,2]])
+];
+
+var FOLLOW={
+kiemtra:c('kiemtra','Đoàn kiểm tra','🕵️','Đoàn kiểm tra gõ cửa và đi thẳng tới ba máy kia.',['Tự nhận, nộp phạt',[0,-4,-20,-4]],['Đổ cho nhân viên',[0,-20,0,-10]]),
+tralai:c('tralai','Ngân hàng','🏦','Đến hạn trả lãi tháng này.',['Trả đủ',[0,0,-12,3]],['Xin gia hạn',[0,0,4,-8]]),
+vetnut:c('vetnut','Giám sát công trình','⚠️','Công trình xuất hiện vết nứt ở dầm tầng hai.',['Gia cố, chịu chi phí',[-6,-4,-18,8]],['Đổ lỗi cho nhà thầu',[-4,0,0,-18]]),
+lohh:c('lohh','Anh Tuấn (chủ đầu tư)','😠','Anh nghe nói em ăn hoa hồng nội thất. Có thật không?',['Thừa nhận, hoàn tiền',[-6,0,-14,-4]],['Chối bay',[-14,0,0,-12]])
+};
+
+var FIX=[
+fx('f_c_lo',0,0,'Anh Tuấn (chủ đầu tư)','👔','Anh đang cân nhắc giao dự án sau cho bên khác.',['Mời cà phê trao đổi',[14,0,-4,0]],['Tặng thêm phối cảnh',[16,-8,0,0]]),
+fx('f_c_hi',0,1,'Anh Tuấn (chủ đầu tư)','👔','Anh muốn ngồi hẳn ở văn phòng em xem team vẽ cho tiện.',['Lịch sự từ chối',[-14,4,0,0]],['Cho ngồi',[8,-14,0,0]]),
+fx('f_t_lo',1,0,'Hùng (trưởng nhóm)','😮‍💨','Cả team kiệt sức. Em đề nghị cho nghỉ nửa ngày.',['Cho nghỉ',[-4,16,-4,0]],['Họp động viên',[0,8,0,-2]]),
+fx('f_t_hi',1,1,'Hùng (trưởng nhóm)','😎','Team quá thoải mái, deadline đã trễ ba ngày.',['Siết kỷ luật',[0,-12,4,0]],['Bỏ qua',[-6,4,0,-4]]),
+fx('f_m_lo',2,0,'Chị Mai (kế toán)','🧾','Quỹ công ty chỉ đủ trả lương hai tuần.',['Nhận dự án lương thấp',[-4,-8,16,0]],['Cắt chi tiêu',[0,-10,12,0]]),
+fx('f_m_hi',2,1,'Chị Mai (kế toán)','🧾','Quỹ dư khá nhiều. Em gợi ý chia thưởng hoặc đầu tư.',['Chia thưởng team',[0,14,-16,0]],['Đầu tư chứng khoán',[0,0,-14,-2]]),
+fx('f_r_lo',3,0,'Mạng xã hội','😡','Một review xấu về công ty đang lan rộng.',['Phản hồi lịch sự',[0,0,0,10]],['Mời khách sửa miễn phí',[4,0,-6,14]]),
+fx('f_r_hi',3,1,'Tạp chí','🌟','Truyền thông khen quá lời, nhà thầu và khách kỳ vọng rất cao.',['Hạ kỳ vọng',[-4,0,0,-12]],['Tận dụng đà',[4,-6,0,6]])
+];
+
+var S, best=SAVED.best||0, cur=null, busy=false;
+var top=document.getElementById('top'), card=document.getElementById('card'), choice=document.getElementById('choice'), info=document.getElementById('info');
+var fills=[], dots=[];
+M.forEach(function(m){
+  var d=document.createElement('div'); d.className='m';
+  d.innerHTML='<div class="dot"><i></i></div><div class="ic">'+m[0]+'</div><div class="nm">'+m[1]+'</div><div class="bar"><div class="fill"></div></div>';
+  top.appendChild(d); fills.push(d.querySelector('.fill')); dots.push(d.querySelector('.dot i'));
+});
+
+function save(){ window.__save={best:best,state:(S&&!S.over)?S:null}; try{localStorage.setItem('kts-truong-save',JSON.stringify(window.__save));}catch(_){} }
+function clamp(x){return Math.max(0,Math.min(100,x));}
+function rnd(a){return a[Math.floor(Math.random()*a.length)];}
+function newGame(){ S={v:[50,50,50,50],week:0,q:[],recent:[],intro:0,over:null}; }
+function meters(){
+  S.v.forEach(function(x,k){ fills[k].style.width=x+'%'; fills[k].classList.toggle('warn',x<=20||x>=80); });
+  info.textContent='Tuần '+S.week+'  ·  Kỷ lục '+best;
+}
+function preview(e){
+  dots.forEach(function(d,k){
+    var a=e?Math.abs(e[k]):0, s=a===0?0:(a>=10?11:6);
+    d.style.width=s+'px'; d.style.height=s+'px';
+  });
+}
+function pick(){
+  if(!S.intro){ S.intro=1; return INTRO; }
+  for(var i=0;i<S.q.length;i++){ if(S.q[i].due<=S.week){ var id=S.q.splice(i,1)[0].id; return FOLLOW[id]; } }
+  var need=[]; S.v.forEach(function(x,k){ if(x<=20) need.push([k,0]); else if(x>=80) need.push([k,1]); });
+  if(need.length && Math.random()<0.5){
+    var n=rnd(need);
+    var f=FIX.filter(function(z){return z.m===n[0]&&z.s===n[1]&&S.recent.indexOf(z.id)<0;});
+    if(f.length) return rnd(f);
+  }
+  var pool=MAIN.filter(function(z){return S.recent.indexOf(z.id)<0;});
+  if(!pool.length){ S.recent=[]; pool=MAIN; }
+  return rnd(pool);
+}
+function show(){
+  cur=pick();
+  document.getElementById('cic').textContent=cur.ic;
+  document.getElementById('cname').textContent=cur.who;
+  document.getElementById('ctext').textContent=cur.t;
+  choice.style.opacity=0; preview(null);
+  card.style.transition='none'; card.style.transform='translateX(0) rotate(0deg)'; card.style.opacity=0;
+  void card.offsetWidth;
+  card.style.transition='opacity .25s ease'; card.style.opacity=1;
+  busy=false; save();
+}
+function finish(k,side){
+  S.over={k:k,s:side};
+  var isNew=S.week>best;
+  best=Math.max(best,S.week);
+  var e=END[k][side];
+  document.getElementById('oh').textContent=e[0];
+  document.getElementById('op').textContent=e[1];
+  document.getElementById('os').textContent='Bạn điều hành công ty được '+S.week+' tuần'+(isNew?' (kỷ lục mới)':'')+'.';
+  document.getElementById('over').style.display='flex';
+  save();
+}
+function apply(side){
+  var ch=cur[side], e=ch[1], o=ch[2]||{};
+  for(var k=0;k<4;k++) S.v[k]=clamp(S.v[k]+e[k]);
+  if(o.next) S.q.push({id:o.next[0],due:S.week+o.next[1]});
+  S.week++;
+  S.recent.push(cur.id); if(S.recent.length>14) S.recent.shift();
+  meters();
+  for(var j=0;j<4;j++){
+    if(S.v[j]<=0){ finish(j,0); return; }
+    if(S.v[j]>=100){ finish(j,1); return; }
+  }
+  show();
+}
+function commit(side){
+  if(busy) return; busy=true;
+  card.style.transition='transform .28s ease,opacity .28s ease';
+  card.style.transform='translateX('+(side==='L'?-520:520)+'px) rotate('+(side==='L'?-28:28)+'deg)';
+  card.style.opacity=0;
+  setTimeout(function(){ apply(side); },270);
+}
+function move(x){
+  card.style.transform='translateX('+x+'px) rotate('+(x/18)+'deg)';
+  var side=x<0?'L':'R', a=Math.min(1,Math.abs(x)/90);
+  choice.textContent=cur[side][0]; choice.style.opacity=a;
+  preview(a>0.35?cur[side][1]:null);
+}
+function snap(){
+  card.style.transition='transform .22s ease';
+  card.style.transform='translateX(0) rotate(0deg)';
+  choice.style.opacity=0; preview(null);
+}
+var dx=0,sx=0,drag=false;
+card.addEventListener('pointerdown',function(e){ if(busy) return; drag=true; sx=e.clientX; dx=0; try{card.setPointerCapture(e.pointerId);}catch(_){} card.style.transition='none'; });
+card.addEventListener('pointermove',function(e){ if(!drag) return; dx=e.clientX-sx; move(dx); });
+function end(){ if(!drag) return; drag=false; if(Math.abs(dx)>110) commit(dx<0?'L':'R'); else snap(); dx=0; }
+card.addEventListener('pointerup',end); card.addEventListener('pointercancel',end);
+function tap(side){ if(busy) return; move(side==='L'?-120:120); setTimeout(function(){commit(side);},160); }
+document.getElementById('bl').addEventListener('click',function(){tap('L');});
+document.getElementById('br').addEventListener('click',function(){tap('R');});
+document.addEventListener('keydown',function(e){ if(e.key==='ArrowLeft') tap('L'); if(e.key==='ArrowRight') tap('R'); });
+document.getElementById('ob').addEventListener('click',function(){
+  document.getElementById('over').style.display='none'; newGame(); meters(); show();
+});
+
+if(SAVED.state && SAVED.state.v && !SAVED.state.over){ S=SAVED.state; } else { newGame(); }
+window.__game={get S(){return S;},get cur(){return cur;},tap:tap};
+meters(); show();
+})();
+</script></body></html>
