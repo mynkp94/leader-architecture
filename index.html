@@ -8,45 +8,49 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#12161d">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<style>
+<script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=ljnt2lmD4nFNTOKEGCWhT_7ru-kxksHLsSF8BGABKD0VhG4pm3Zs1YQGO69IC-yEbkUKM-BRN2x042kflwShQkTfV7thcfZ-D6Wvu-fw8AIaty1u9Q2WtTLWsnCudTGybfstNCJDXI__3pLuaCi391NLVs95UOT6mYne911Q2Re1hwvyJ0LvAoK_Vj0drJEyMeWnKAgtNmMv6aaBqvdh7INbhW4D7gC73snjHLaVlh4PY6ku-fJJaEvYJ61Dz4nBlAhZpCdjIbiFPiLtu9_QZOlTw7duthUCZVEjCkPBgT0GIp7p7J4Iecy60LBvPXPh" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pBNFpXWTJaVGMyWlRWaU5URmhNVGcyTURBd05qVm1PV0ptWkdNNVltTm1ZekF4TlRaaVltSXdOVFV3WldFNU16RVNDeElIRU9yVzFZekxHaGdCJmZpbGVuYW1lPWluZGV4Lmh0bWwmb3BpPTEwMzEzNTA1MA"/><style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
 html,body{margin:0;height:100%;background:#12161d;color:#e9edf3;font-family:-apple-system,"SF Pro Text",system-ui,sans-serif;overflow:hidden;touch-action:none}
 #app{height:100%;display:flex;flex-direction:column;align-items:center;padding:max(env(safe-area-inset-top),10px) 14px max(env(safe-area-inset-bottom),14px)}
 #top{width:100%;max-width:420px;display:flex;gap:12px;margin-top:6px}
-.m{flex:1;text-align:center}
-.dot{height:12px;display:flex;align-items:center;justify-content:center}
-.dot i{display:block;border-radius:50%;background:#e9edf3;width:0;height:0;transition:all .15s}
+.m{flex:1;text-align:center;display:flex;flex-direction:column;align-items:center}
+.dot{height:12px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.dot i{display:block;border-radius:50%;background:#ffd98a;width:0;height:0;transition:all .15s}
 .ic{font-size:26px;line-height:1.15}
-.nm{font-size:10px;opacity:.6;margin:1px 0 4px}
-.bar{height:6px;border-radius:3px;background:#2a313d;overflow:hidden}
-.fill{height:100%;width:50%;background:#5ab0ff;transition:width .45s ease,background .3s}
-.fill.warn{background:#ff6b5e}
+.nm{font-size:10px;opacity:.6;margin:1px 0 2px}
 #info{margin-top:10px;font-size:12px;opacity:.55;letter-spacing:.3px}
 #stage{flex:1;width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:0}
-#choice{min-height:46px;display:flex;align-items:flex-end;justify-content:center;font-size:17px;font-weight:600;text-align:center;opacity:0;padding:0 10px;color:#ffd98a}
 #card{width:min(86vw,340px);height:min(52vh,410px);border-radius:22px;padding:18px 20px;display:flex;flex-direction:column;align-items:center;color:#1d2330;touch-action:none;cursor:grab;will-change:transform,opacity;
 background-color:#f4efe3;background-image:linear-gradient(rgba(60,90,140,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(60,90,140,.09) 1px,transparent 1px);background-size:22px 22px;
 box-shadow:0 18px 40px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.5)}
 #cic{font-size:62px;line-height:1.1;margin-top:6px}
 #cname{font-size:13px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#3b5b8c;margin:6px 0 14px;text-align:center}
 #ctext{font-size:19px;line-height:1.4;text-align:center;font-weight:500;display:flex;align-items:center;flex:1}
-#btns{display:flex;gap:16px;margin-top:6px}
-#btns button{width:64px;height:44px;border-radius:22px;border:0;background:#222a37;color:#e9edf3;font-size:20px}
+#bottom-controls{width:100%;max-width:420px;display:flex;flex-direction:column;gap:8px;align-items:center}
+#btn-labels{width:100%;display:flex;justify-content:space-between;gap:10px}
+.btn-lbl{flex:1;font-size:13px;font-weight:600;color:#ffd98a;text-align:center;min-height:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05);border-radius:12px;padding:4px 8px;border:1px solid rgba(255,255,255,.08)}
+#btns{display:flex;gap:24px}
+#btns button{width:68px;height:44px;border-radius:22px;border:0;background:#222a37;color:#e9edf3;font-size:20px;cursor:pointer}
 #btns button:active{background:#33405a}
-#over{position:fixed;inset:0;background:rgba(10,12,16,.94);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center}
+#over{position:fixed;inset:0;background:rgba(10,12,16,.94);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;z-index:99}
 #over h2{font-size:26px;margin:0 0 12px;color:#ffd98a}
 #over p{font-size:16px;line-height:1.5;margin:0 0 16px;max-width:340px;opacity:.9}
 #over small{opacity:.6;display:block;margin-bottom:22px}
-#over button{padding:13px 30px;border:0;border-radius:24px;background:#5ab0ff;color:#08121f;font-size:17px;font-weight:700}
+#over button{padding:13px 30px;border:0;border-radius:24px;background:#5ab0ff;color:#08121f;font-size:17px;font-weight:700;cursor:pointer}
 </style></head><body>
 <div id="app">
   <div id="top"></div>
   <div id="info"></div>
   <div id="stage">
-    <div id="choice"></div>
     <div id="card"><div id="cic"></div><div id="cname"></div><div id="ctext"></div></div>
   </div>
-  <div id="btns"><button id="bl">←</button><button id="br">→</button></div>
+  <div id="bottom-controls">
+    <div id="btn-labels">
+      <div id="lbl-left" class="btn-lbl"></div>
+      <div id="lbl-right" class="btn-lbl"></div>
+    </div>
+    <div id="btns"><button id="bl">←</button><button id="br">→</button></div>
+  </div>
 </div>
 <div id="over"><h2 id="oh"></h2><p id="op"></p><small id="os"></small><button id="ob">Chơi lại</button></div>
 <script>
@@ -66,10 +70,11 @@ var END=[
 function c(id,who,ic,t,L,R){return {id:id,who:who,ic:ic,t:t,L:L,R:R};}
 function fx(id,m,s,who,ic,t,L,R){var o=c(id,who,ic,t,L,R);o.m=m;o.s=s;return o;}
 
-var INTRO=c('intro','Chào mừng','📐','Bạn vừa nhận chức Kiến trúc sư trưởng. Vuốt thẻ sang trái hoặc phải để quyết định. Đừng để chỉ số nào về 0 hoặc đầy 100.',
- ['Bắt đầu',[0,0,0,0]],['Bắt đầu',[0,0,0,0]]);
+var INTRO=c('intro','Chào mừng','📐','Bạn vừa nhận chức Kiến trúc sư trưởng. Vuốt thẻ sang trái/phải hoặc dùng nút bấm để đưa ra quyết định.',
+ ['Bắt đầu ngay',[0,0,0,0]],['Sẵn sàng',[0,0,0,0]]);
 
 var MAIN=[
+// Bộ câu hỏi gốc
 c('giengtroi','Bà Hạnh (chủ nhà)','🏠','Anh KTS ơi, em muốn đặt giếng trời giữa nhà, thầy phong thủy bảo phải đúng chỗ mới giữ được tài lộc.',['Giải thích kỹ thuật',[-8,0,0,6]],['Chiều ý chủ nhà',[12,0,-4,-6]]),
 c('revit','Hùng (trưởng nhóm)','💻','Revit treo cứng, ba tiếng chưa lưu. Cả team đang nhìn anh.',['Dùng bản backup cũ',[0,-6,0,0]],['Làm lại tối nay',[0,-14,0,6]]),
 c('matdung','Anh Tuấn (chủ đầu tư)','👔','Phương án đẹp, nhưng anh muốn đổi toàn bộ mặt đứng. Mai anh duyệt nhé.',['Nhận, team tăng ca',[12,-14,0,4]],['Xin thêm một tuần',[-10,4,0,0]]),
@@ -111,7 +116,39 @@ c('lannghi','Lan (nhân viên)','😔','Em thấy kiệt sức quá, em muốn n
 c('golf','Anh Tuấn (chủ đầu tư)','⛳','Cuối tuần đi golf với anh nhé, có vài đối tác.',['Từ chối, ở nhà',[-6,4,0,0]],['Đi golf',[8,-4,-4,6]]),
 c('chupanh','Thợ ảnh','📸','Thợ ảnh xin chụp công trình, 15 triệu, ảnh đẹp dùng làm portfolio.',['Tự chụp bằng điện thoại',[0,0,4,-6]],['Thuê chụp',[0,0,-10,12]]),
 c('tongthau','Tổng thầu','📞','Tổng thầu hỏi bản vẽ thi công đợt một có giao sớm hai tuần được không.',['Cam kết giao sớm',[8,-12,4,4]],['Giữ lịch ban đầu',[-8,4,0,0]]),
-c('giahan','Công ty phần mềm','☁️','Gói phần mềm thiết kế sắp hết hạn, giảm giá nếu gia hạn ba năm.',['Gia hạn một năm',[0,0,-6,0]],['Gia hạn ba năm',[0,2,-14,2]])
+c('giahan','Công ty phần mềm','☁️','Gói phần mềm thiết kế sắp hết hạn, giảm giá nếu gia hạn ba năm.',['Gia hạn một năm',[0,0,-6,0]],['Gia hạn ba năm',[0,2,-14,2]]),
+
+// Bộ câu hỏi mở rộng (gấp đôi số lượng)
+c('in_3d','Công ty công nghệ','🖨️','Đối tác mời dùng thử máy in 3D mô hình kiến trúc với giá ưu đãi.',['Đầu tư máy mới',[0,6,-12,6]],['Dùng mô hình giấy',[0,0,2,-2]]),
+c('ai_render','Lan (nhân viên)','🤖','Em dùng AI để tạo 100 phối cảnh gợi ý cho chủ nhà trong 5 phút.',['Ủng hộ ứng dụng AI',[0,8,-4,4]],['Phải tự vẽ tay',[0,-6,2,0]]),
+c('phong_thuy_2','Thầy phong thủy','☯️','Thầy phán giếng trời đặt sai cung tài lộc, phải bít lại ngay.',['Cải tạo lại',[-6,0,-8,-4]],['Thuyết phục khách',[-8,0,0,6]]),
+c('khach_vay_no','Anh Nam (khách hàng)','💸','Khách xin nợ 30% phí thiết kế còn lại đến khi làm xong móng.',['Đồng ý cho nợ',[10,0,-12,-2]],['Dừng giao bản vẽ',[-12,0,8,0]]),
+c('cuot_thau_lon','Sở Xây dựng','🏛️','Có cuộc thi thiết kế Quảng trường thành phố, giải thưởng rất lớn.',['Dành 100% sức làm',[-4,-14,-8,18]],['Bỏ qua, làm nhà dân',[4,4,6,-6]]),
+c('kientrucsuxanh','Hiệp hội Kiến trúc','🍃','Chứng nhận Công trình Xanh Lotus đòi hỏi hồ sơ cực phức tạp.',['Quyết tâm đăng ký',[4,-8,-6,12]],['Thiết kế thông thường',[0,2,4,-4]]),
+c('dien_nuoc','Kỹ sư MEP','⚡','Bản vẽ điện nước xung đột nặng với hệ dầm kết cấu bê tông.',['Làm lại MEP từ đầu',[0,-8,-4,4]],['Ép kết cấu sửa theo',[-6,-4,0,-4]]),
+c('san_go_gia','Thầu công trình','🪵','Nhà thầu gợi ý dùng sàn gỗ ép thay gỗ tự nhiên để tiết kiệm tiền khách.',['Dùng gỗ ép',[8,0,6,-8]],['Bắt dùng gỗ chuẩn',[-10,0,-4,10]]),
+c('tuyendung_capcao','Headhunter','👔','Có KTS senior từ công ty lớn muốn sang làm phó cho bạn.',['Mộ quân ngay',[0,12,-16,4]],['Không đủ chi trả',[0,-4,4,0]]),
+c('nghi_le_tet','Cả team','🎉','Dịp lễ lớn sắp tới, team muốn nghỉ thêm 2 ngày sát deadline.',['Cho nghỉ xả hơi',[0,16,-4,0]],['Bắt làm bù deadline',[0,-16,0,2]]),
+c('ma_mau_son','Bà Hạnh (chủ nhà)','🎨','Sơn tường thực tế nhìn đậm hơn bản vẽ 3D 5%, chủ nhà đòi sơn lại.',['Sơn lại miễn phí',[12,-6,-6,0]],['Giải thích do ánh sáng',[-8,0,0,4]]),
+c('tram_bien_ap','UBND Phường','⚡','Trạm biến áp dự kiến đặt ngay trước cổng chính nhà dự án.',['KHIẾU NẠI DỜI ĐI',[-4,-4,-4,8]],['Chấp nhận thiết kế né',[6,0,0,-6]]),
+c('giam_sat_tac_gia','Công trường','👷','Thầu xây sai cao độ sàn 10cm nhưng đổ bê tông rồi.',['Bắt đập ra làm lại',[-14,-4,-10,12]],['Sửa bản vẽ né lỗi',[8,0,4,-12]]),
+c('chuyen_nha_xuong','Đối tác nội thất','🏭','Đối tác đề nghị mua lại 20% cổ phần xưởng gỗ của họ.',['Góp vốn làm xưởng',[0,0,-18,8]],['Tập trung thiết kế',[0,0,6,0]]),
+c('livestream','Lan (nhân viên)','📹','Lan muốn Stream quá trình thiết kế lên TikTok thu hút khách.',['Cho phép làm',[4,6,-2,8]],['Cấm vì bảo mật',[-4,-4,0,0]]),
+c('giai_doan_dich','Sở Kế hoạch','😷','Thành phố giãn cách, toàn bộ team phải làm việc từ xa (WFH).',['Mua phần mềm quản lý',[0,4,-8,2]],['Tự quản lý qua Zalo',[0,-10,2,-4]]),
+c('nha_mau_ve','Khách hàng cũ','🏡','Khách hàng cũ đưa người quen tới đòi hạ giá 30%.',['Giảm giá hỗ trợ',[12,0,-10,-2]],['Giữ nguyên đơn giá',[-10,0,6,4]]),
+c('hoi_thao_quoc_te','Hội KTS Châu Á','✈️','Mời tham dự Hội thảo Kiến trúc ở Nhật Bản trong 4 ngày.',['Cùng team đi dự',[0,10,-12,10]],['Ở nhà chạy deadline',[-4,-6,4,-4]]),
+c('san_bay_moi','Dự án Quy hoạch','✈️','Dự án nằm trong vùng quy hoạch tĩnh không sân bay mới.',['Điều chỉnh hạ chiều cao',[6,-4,-4,2]],['Xin giấy phép đặc cách',[-8,0,-8,6]]),
+c('nha_hang_xom_nut','Hàng xóm công trình','🏚️','Hàng xóm kiện công trình ép cọc làm nứt tường nhà họ.',['Tạm dừng thi công',[-10,0,-6,4]],['Đổ cho nền đất yếu',[6,0,0,-12]]),
+c('phong_hop_moi','Văn phòng','🛋️','Cần cải tạo lại phòng họp để tiếp các khách hàng VIP.',['Đầu tư sang trọng',[8,4,-12,6]],['Dùng bàn ghế cũ',[0,0,4,-4]]),
+c('su_co_nuoc_ngam','Kỹ sư Địa chất','🌊','Đào móng gặp mạch nước ngầm mạnh hơn dự kiến.',['Thay đổi phương án móng',[-4,-6,-10,8]],['Ép bơm hút nước tiếp',[4,0,-2,-10]]),
+c('thu_ong_kinh','Thợ ảnh kiến trúc','📷','Nhiếp ảnh gia muốn xuất bản cuốn sách ảnh có công trình của bạn.',['Tài trợ kinh phí',[0,0,-10,14]],['Chỉ cung cấp ảnh free',[0,0,2,4]]),
+c('khach_thay_doi_y','Anh Tuấn (chủ đầu tư)','🔄','Đã duyệt thiết kế 90% nhưng khách đổi ý muốn chuyển sang style Cổ điển.',['Tính phí vẽ lại',[-14,4,12,-4]],['Nhẫn nại sửa miễn phí',[14,-10,-6,2]]),
+c('trai_phep_xaydung','Chủ đầu tư','🏗️','Khách đề nghị thiết kế thêm tầng tum trái phép.',['Thẳng thừng từ chối',[-12,0,0,8]],['Làm hồ sơ ngầm',[10,0,8,-14]]),
+c('quy_tu_thien','Ủy ban MTTQ','❤️','Kêu gọi ủng hộ xây dựng trường học vùng cao.',['Ủng hộ lớn',[0,4,-12,16]],['Ủng hộ tượng trưng',[0,0,-2,2]]),
+c('nha_kho_xua','Khách hàng','🏚️','Cải tạo căn nhà cổ 80 năm tuổi保留khung gỗ.',['Bảo tồn toàn bộ',[-4,-8,-8,14]],['Đập đi xây mới hoàn toàn',[6,4,6,-10]]),
+c('thay_doi_luat','Luật Xây dựng mới','📜','Luật mới thay đổi mật độ xây dựng áp dụng ngay tháng sau.',['Sửa gấp hồ sơ',[0,-8,-4,4]],['Cố nộp theo luật cũ',[-6,0,0,-6]]),
+c('tiem_nang_moi','Khách hàng VIP','💎','Dự án Dinh thự 50 tỷ nhưng yêu cầu ký hợp đồng bảo mật khắt khe.',['Chấp nhận điều khoản',[14,0,16,-6]],['Từ chối vì phiền phức',[-10,0,-4,2]]),
+c('doi_truong_nhom','Hùng (trưởng nhóm)','💼','Hùng nhận được lời mời làm Giám đốc kỹ thuật công ty khác.',['Tăng lương giữ chân',[0,12,-12,0]],['Để Hùng ra đi',[0,-14,2,-2]])
 ];
 
 var FOLLOW={
@@ -133,12 +170,13 @@ fx('f_r_hi',3,1,'Tạp chí','🌟','Truyền thông khen quá lời, nhà thầ
 ];
 
 var S, best=SAVED.best||0, cur=null, busy=false;
-var top=document.getElementById('top'), card=document.getElementById('card'), choice=document.getElementById('choice'), info=document.getElementById('info');
-var fills=[], dots=[];
+var top=document.getElementById('top'), card=document.getElementById('card'), info=document.getElementById('info');
+var lblLeft=document.getElementById('lbl-left'), lblRight=document.getElementById('lbl-right');
+var dots=[];
 M.forEach(function(m){
   var d=document.createElement('div'); d.className='m';
-  d.innerHTML='<div class="dot"><i></i></div><div class="ic">'+m[0]+'</div><div class="nm">'+m[1]+'</div><div class="bar"><div class="fill"></div></div>';
-  top.appendChild(d); fills.push(d.querySelector('.fill')); dots.push(d.querySelector('.dot i'));
+  d.innerHTML='<div class="ic">'+m[0]+'</div><div class="nm">'+m[1]+'</div><div class="dot"><i></i></div>';
+  top.appendChild(d); dots.push(d.querySelector('.dot i'));
 });
 
 function save(){ window.__save={best:best,state:(S&&!S.over)?S:null}; try{localStorage.setItem('kts-truong-save',JSON.stringify(window.__save));}catch(_){} }
@@ -146,12 +184,11 @@ function clamp(x){return Math.max(0,Math.min(100,x));}
 function rnd(a){return a[Math.floor(Math.random()*a.length)];}
 function newGame(){ S={v:[50,50,50,50],week:0,q:[],recent:[],intro:0,over:null}; }
 function meters(){
-  S.v.forEach(function(x,k){ fills[k].style.width=x+'%'; fills[k].classList.toggle('warn',x<=20||x>=80); });
   info.textContent='Tuần '+S.week+'  ·  Kỷ lục '+best;
 }
 function preview(e){
   dots.forEach(function(d,k){
-    var a=e?Math.abs(e[k]):0, s=a===0?0:(a>=10?11:6);
+    var a=e?Math.abs(e[k]):0, s=a===0?0:(a>=10?10:6);
     d.style.width=s+'px'; d.style.height=s+'px';
   });
 }
@@ -173,7 +210,9 @@ function show(){
   document.getElementById('cic').textContent=cur.ic;
   document.getElementById('cname').textContent=cur.who;
   document.getElementById('ctext').textContent=cur.t;
-  choice.style.opacity=0; preview(null);
+  lblLeft.textContent = cur.L[0];
+  lblRight.textContent = cur.R[0];
+  preview(null);
   card.style.transition='none'; card.style.transform='translateX(0) rotate(0deg)'; card.style.opacity=0;
   void card.offsetWidth;
   card.style.transition='opacity .25s ease'; card.style.opacity=1;
@@ -195,7 +234,7 @@ function apply(side){
   for(var k=0;k<4;k++) S.v[k]=clamp(S.v[k]+e[k]);
   if(o.next) S.q.push({id:o.next[0],due:S.week+o.next[1]});
   S.week++;
-  S.recent.push(cur.id); if(S.recent.length>14) S.recent.shift();
+  S.recent.push(cur.id); if(S.recent.length>25) S.recent.shift();
   meters();
   for(var j=0;j<4;j++){
     if(S.v[j]<=0){ finish(j,0); return; }
@@ -213,13 +252,12 @@ function commit(side){
 function move(x){
   card.style.transform='translateX('+x+'px) rotate('+(x/18)+'deg)';
   var side=x<0?'L':'R', a=Math.min(1,Math.abs(x)/90);
-  choice.textContent=cur[side][0]; choice.style.opacity=a;
   preview(a>0.35?cur[side][1]:null);
 }
 function snap(){
   card.style.transition='transform .22s ease';
   card.style.transform='translateX(0) rotate(0deg)';
-  choice.style.opacity=0; preview(null);
+  preview(null);
 }
 var dx=0,sx=0,drag=false;
 card.addEventListener('pointerdown',function(e){ if(busy) return; drag=true; sx=e.clientX; dx=0; try{card.setPointerCapture(e.pointerId);}catch(_){} card.style.transition='none'; });
